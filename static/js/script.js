@@ -1,0 +1,1 @@
+console.log("Holy smokes, life is awesome!");
