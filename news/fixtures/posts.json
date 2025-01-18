@@ -1,0 +1,268 @@
+[
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Mastering CSS: Tricks for Seamless Web Design",
+            "slug": "mastering-css-tricks-for-seamless-web-design",
+            "author": 1,
+            "content": "<p>CSS is the backbone of web design. This guide explores advanced CSS techniques to help developers create visually appealing and responsive websites.</p>",
+            "created_on": "2023-07-20T10:10:10.123Z",
+            "status": 1,
+            "excerpt": "Discover CSS tricks that bring design ideas to life, from animations to grid layouts.",
+            "updated_on": "2023-09-20T15:10:10.456Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "JavaScript Debugging: From Errors to Insights",
+            "slug": "javascript-debugging-from-errors-to-insights",
+            "author": 1,
+            "content": "<p>Learn the essential debugging techniques in JavaScript, including leveraging DevTools, setting breakpoints, and optimizing error tracking strategies.</p>",
+            "created_on": "2023-08-01T12:30:30.987Z",
+            "status": 1,
+            "excerpt": "Master the art of debugging JavaScript with tools and techniques for error tracking.",
+            "updated_on": "2023-09-25T17:20:15.678Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Python Libraries: Tools for Every Developer",
+            "slug": "python-libraries-tools-for-every-developer",
+            "author": 1,
+            "content": "<p>Python's vast library ecosystem simplifies complex tasks. This post highlights top libraries for data analysis, web development, and machine learning.</p>",
+            "created_on": "2023-08-15T09:00:00.456Z",
+            "status": 1,
+            "excerpt": "Explore the must-know Python libraries that enhance productivity and simplify coding.",
+            "updated_on": "2023-09-30T11:00:00.789Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Responsive Design: Crafting Sites for Every Screen",
+            "slug": "responsive-design-crafting-sites-for-every-screen",
+            "author": 1,
+            "content": "<p>In an era of diverse devices, responsive design is critical. Learn how to create flexible layouts and optimize UI for different screen sizes.</p>",
+            "created_on": "2023-09-01T10:15:15.234Z",
+            "status": 1,
+            "excerpt": "Design websites that look great on any device with responsive design techniques.",
+            "updated_on": "2023-10-01T16:45:45.987Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Demystifying APIs: Bridging Software Worlds",
+            "slug": "demystifying-apis-bridging-software-worlds",
+            "author": 1,
+            "content": "<p>APIs enable seamless communication between applications. This post simplifies APIs, their structure, and how to effectively integrate them into projects.</p>",
+            "created_on": "2023-09-10T08:20:20.567Z",
+            "status": 1,
+            "excerpt": "Understand APIs and their role in connecting software systems effortlessly.",
+            "updated_on": "2023-10-05T09:50:50.123Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Version Control Mastery: Git Beyond Basics",
+            "slug": "version-control-mastery-git-beyond-basics",
+            "author": 1,
+            "content": "<p>Move past simple commits and branches with advanced Git techniques. Learn rebasing, conflict resolution, and efficient workflows.</p>",
+            "created_on": "2023-09-15T14:45:45.789Z",
+            "status": 1,
+            "excerpt": "Take your Git skills to the next level with advanced version control strategies.",
+            "updated_on": "2023-10-08T18:00:00.000Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Securing Web Applications: Best Practices",
+            "slug": "securing-web-applications-best-practices",
+            "author": 1,
+            "content": "<p>Security is non-negotiable in web development. Learn about CSRF protection, secure headers, and input validation to safeguard your applications.</p>",
+            "created_on": "2023-10-05T10:15:30.567Z",
+            "status": 1,
+            "excerpt": "Implement robust security measures to protect your web applications from threats.",
+            "updated_on": "2023-10-15T12:45:30.987Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Database Optimization Techniques",
+            "slug": "database-optimization-techniques",
+            "author": 1,
+            "content": "<p>Efficient database management is key to performance. Explore indexing, query optimization, and caching strategies.</p>",
+            "created_on": "2023-10-07T13:30:30.789Z",
+            "status": 1,
+            "excerpt": "Optimize database performance with these essential techniques.",
+            "updated_on": "2023-10-17T15:50:50.123Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Introduction to DevOps: Bridging Development and Operations",
+            "slug": "introduction-to-devops-bridging-development-and-operations",
+            "author": 1,
+            "content": "<p>DevOps is transforming how teams build and deploy software. Learn about CI/CD, containerization, and collaboration tools.</p>",
+            "created_on": "2023-10-10T08:10:10.456Z",
+            "status": 1,
+            "excerpt": "Explore DevOps concepts and tools to streamline development workflows.",
+            "updated_on": "2023-10-20T11:20:20.678Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "The Future of AI: Trends to Watch",
+            "slug": "the-future-of-ai-trends-to-watch",
+            "author": 1,
+            "content": "<p>Artificial Intelligence is evolving rapidly. Explore trends like generative AI, ethical considerations, and real-world applications.</p>",
+            "created_on": "2023-10-12T11:20:20.123Z",
+            "status": 1,
+            "excerpt": "Stay ahead in AI by understanding emerging trends and their implications.",
+            "updated_on": "2023-10-22T14:45:45.456Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "UX Design Principles for Developers",
+            "slug": "ux-design-principles-for-developers",
+            "author": 1,
+            "content": "<p>Good user experience is key to app success. Learn the principles of intuitive design, accessibility, and user feedback loops.</p>",
+            "created_on": "2023-10-15T09:00:00.456Z",
+            "status": 1,
+            "excerpt": "Design intuitive user experiences with these essential UX principles.",
+            "updated_on": "2023-10-25T11:10:10.789Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Code Review: Collaboration for Better Code",
+            "slug": "code-review-collaboration-for-better-code",
+            "author": 1,
+            "content": "<p>Code reviews improve quality and team collaboration. Learn best practices for constructive feedback and maintaining code standards.</p>",
+            "created_on": "2023-10-18T14:45:45.123Z",
+            "status": 1,
+            "excerpt": "Foster teamwork and improve code quality with effective review processes.",
+            "updated_on": "2023-10-28T15:20:20.456Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Cloud Computing: Revolutionizing IT Infrastructure",
+            "slug": "cloud-computing-revolutionizing-it-infrastructure",
+            "author": 1,
+            "content": "<p>Cloud computing has transformed IT. Understand the benefits, models, and services offered by leading providers like AWS and Azure.</p>",
+            "created_on": "2023-10-20T10:30:30.789Z",
+            "status": 1,
+            "excerpt": "Dive into cloud computing and its impact on modern IT infrastructure.",
+            "updated_on": "2023-10-30T11:50:50.123Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "The Role of Automation in Modern Development",
+            "slug": "the-role-of-automation-in-modern-development",
+            "author": 1,
+            "content": "<p>Automation accelerates development workflows. Explore tools for testing, deployment, and monitoring that save time and reduce errors.</p>",
+            "created_on": "2023-10-22T12:10:10.567Z",
+            "status": 1,
+            "excerpt": "Leverage automation to streamline development and deployment processes.",
+            "updated_on": "2023-11-01T14:20:20.678Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Open Source Collaboration: Building Together",
+            "slug": "open-source-collaboration-building-together",
+            "author": 1,
+            "content": "<p>Explore the dynamics of open-source projects, including version control, community contributions, and licensing essentials.</p>",
+            "created_on": "2023-10-25T14:00:00.456Z",
+            "status": 1,
+            "excerpt": "Understand how to contribute to and benefit from open-source software development.",
+            "updated_on": "2023-11-03T10:30:20.789Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Blockchain Beyond Cryptocurrency",
+            "slug": "blockchain-beyond-cryptocurrency",
+            "author": 1,
+            "content": "<p>Blockchain technology is revolutionizing industries beyond finance. Discover its applications in healthcare, logistics, and identity verification.</p>",
+            "created_on": "2023-10-28T12:45:45.123Z",
+            "status": 1,
+            "excerpt": "Learn how blockchain technology is solving problems across various sectors.",
+            "updated_on": "2023-11-05T15:20:20.456Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Mobile App Trends: What's Next?",
+            "slug": "mobile-app-trends-whats-next",
+            "author": 1,
+            "content": "<p>Stay ahead with insights into mobile app trends, including 5G integration, AI features, and cross-platform development tools.</p>",
+            "created_on": "2023-10-30T10:15:15.789Z",
+            "status": 1,
+            "excerpt": "Explore upcoming trends shaping the future of mobile app development.",
+            "updated_on": "2023-11-07T12:45:30.123Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Game Development: From Idea to Reality",
+            "slug": "game-development-from-idea-to-reality",
+            "author": 1,
+            "content": "<p>Take your game ideas from concept to launch. Learn about engines, asset creation, and marketing strategies for indie developers.</p>",
+            "created_on": "2023-11-02T14:30:30.456Z",
+            "status": 1,
+            "excerpt": "A guide for aspiring game developers to bring their projects to life.",
+            "updated_on": "2023-11-10T15:50:50.987Z"
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": null,
+        "fields": {
+            "title": "Accessibility in Tech: Inclusive Development",
+            "slug": "accessibility-in-tech-inclusive-development",
+            "author": 1,
+            "content": "<p>Accessibility ensures technology is usable by everyone. Learn how to design and code for inclusivity with practical examples.</p>",
+            "created_on": "2023-11-04T09:20:20.567Z",
+            "status": 1,
+            "excerpt": "Discover how to make technology accessible to all with inclusive practices.",
+            "updated_on": "2023-11-12T14:50:10.678Z"
+        }
+    }
+]
