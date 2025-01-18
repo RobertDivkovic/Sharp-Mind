@@ -13,4 +13,4 @@ class PostList(generic.ListView):
 
 class PostDetail(generic.DetailView):
     model = Post
-    template_name = "news/post_detail.html"
+    template_name = "news/post_detail.html" # Path to the template for individual posts

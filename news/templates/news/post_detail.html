@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Sharp-Mind News{% endblock %}
+
+{% block content %}
+    <article>
+        <h1>{{ post.title }}</h1>
+        <p><strong>Published:</strong> {{ post.created_on|date:"F j, Y" }}</p>
+        <hr>
+        <div>
+            {{ post.content|safe }}
+        </div>
+    </article>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-4">Back to Homepage</a>
+{% endblock %}
