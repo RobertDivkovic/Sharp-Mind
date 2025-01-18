@@ -1,25 +1,24 @@
 {% extends "base.html" %}
 
+{% block title %}Homepage{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h1>Sharp-Mind Homepage</h1>
-    <hr>
-    {% for post in posts %}
-        <div class="post mb-4">
-            <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-            <p>{{ post.excerpt }}</p>
-            <p><small>Published on {{ post.created_on|date:"F j, Y" }}</small></p>
-        </div>
-    {% empty %}
-        <p>No posts found.</p>
-    {% endfor %}
-    <!-- Pagination -->
-    <div class="pagination">
-        {% if is_paginated %}
-            <span>
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-            </span>
-            <div>
+    <h1>Welcome to Sharp-Mind</h1>
+    <p>Explore the latest posts below:</p>
+
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                    <p>{{ post.excerpt }}</p>
+                    <small>Published on {{ post.created_on|date:"F j, Y" }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagination">
+            {% if is_paginated %}
                 {% if page_obj.has_previous %}
                     <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
                 {% endif %}
@@ -29,8 +28,9 @@
                 {% if page_obj.has_next %}
                     <a href="?page={{ page_obj.next_page_number }}">Next</a>
                 {% endif %}
-            </div>
-        {% endif %}
-    </div>
-</div>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>No posts available.</p>
+    {% endif %}
 {% endblock %}
