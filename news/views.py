@@ -10,3 +10,7 @@ class PostList(generic.ListView):
     template_name = "news/index.html"
     context_object_name = "posts"
     paginate_by = 5
+
+class PostDetail(generic.DetailView):
+    model = Post
+    template_name = "news/post_detail.html"
