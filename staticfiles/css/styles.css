@@ -1,0 +1,193 @@
+/* General Body Styling */
+body {
+    background-color: #fefefe;
+    font-family: 'Roboto', sans-serif;
+    color: #343a40;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #0077cc;
+    text-transform: uppercase;
+}
+
+.navbar-brand:hover {
+    color: #0056a8;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555555;
+}
+
+.navbar-nav .nav-link.active {
+    color: #0077cc;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0056a8;
+}
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px 0;
+}
+
+.footer p,
+.footer a {
+    font-size: 0.9rem;
+    color: #bbbbbb;
+    margin: 0;
+}
+
+.footer a:hover {
+    color: #0077cc;
+    text-decoration: underline;
+}
+
+/* Main Content Styling */
+main {
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Heading Styles */
+h1, h2, h3 {
+    color: #343a40;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+/* Post List and Links */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+a.post-link {
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+a.post-link:hover {
+    color: #0056a8;
+    text-decoration: underline;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #0077cc;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-primary:hover {
+    background-color: #0056a8;
+    color: #ffffff;
+}
+
+/* Pagination */
+.pagination a {
+    margin: 0 5px;
+    color: #555555;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+.pagination a:hover {
+    background-color: #f5f5f5;
+    border-color: #d0d0d0;
+}
+
+.pagination a.active {
+    background-color: #0077cc;
+    color: #ffffff;
+    border-color: #0077cc;
+}
+
+/* Custom Card Design */
+.card {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #0077cc;
+}
+
+.card-title:hover {
+    text-decoration: underline;
+}
+
+/* Miscellaneous */
+.text-muted {
+    color: #6c757d;
+}
+
+.bg-light-blue {
+    background-color: #e7f3ff;
+}
+
+.text-center {
+    text-align: center;
+}
