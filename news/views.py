@@ -1,7 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views import generic
+from .models import Post
 
 # Create your views here.
 
-def my_news(request):
-    return HttpResponse("Hello, News!")
+class PostList(generic.ListView):
+    model = Post
+    queryset = Post.objects.filter(status=1).order_by("-created_on")
+    template_name = "news/index.html"
+    context_object_name = "posts"
+    paginate_by = 5
