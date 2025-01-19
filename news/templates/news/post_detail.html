@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ post.title }} - Sharp-Mind News{% endblock %}
 
@@ -13,5 +14,45 @@
     </div>
     <img src="{% static 'images/library.png' %}" alt="Example Image" class="img-fluid mt-4">
 </article>
+
+<hr>
+
+<!-- Display Comments -->
+<div class="comments-section">
+    <h3>Comments</h3>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+            <li>
+                <p><strong>{{ comment.author }}</strong>:</p>
+                <p>{{ comment.body }}</p>
+                <p class="text-muted"><small>Posted on {{ comment.created_on|date:"F j, Y, g:i a" }}</small></p>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endif %}
+</div>
+
+<hr>
+
+<!-- Comment Form -->
+<div class="col-md-4 card mb-4 mt-3">
+    <div class="card-body">
+        {% if user.is_authenticated %}
+        <h3>Leave a comment:</h3>
+        <p>Posting as: {{ user.username }}</p>
+        <form id="commentForm" method="post" style="margin-top: 1.3em;">
+            {{ form|crispy }}
+            {% csrf_token %}
+            <button id="submitButton" type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </form>
+        {% else %}
+        <p>Log in to leave a comment</p>
+        {% endif %}
+    </div>
+</div>
+
 <a href="{% url 'home' %}" class="btn btn-primary mt-4">Back to Homepage</a>
 {% endblock %}

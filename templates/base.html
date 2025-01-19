@@ -77,6 +77,17 @@
         </div>
     </nav>
 
+    <!-- Flash Messages -->
+    <div class="container my-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <!-- Authentication Status -->
     <div class="container my-3">
         {% if user.is_authenticated %}
