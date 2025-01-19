@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">{% trans "Sign In" %}</h3>
+                    <p class="text-center text-muted mb-4">
+                        {% blocktrans %}Welcome back to the Sharp-Mind blog. To leave a comment or like a post, please log in. If
+                        you don’t have an account, <a class="link-primary fw-bold" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+                    </p>
+                    <form method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-block mt-3" type="submit">{% trans "Sign In" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <p class="text-center text-muted mt-3">
+                {% trans "Forgot your password?" %} 
+                <a href="{% url 'account_reset_password' %}" class="link-primary">{% trans "Reset it here." %}</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
