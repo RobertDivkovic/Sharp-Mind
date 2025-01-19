@@ -77,6 +77,15 @@
         </div>
     </nav>
 
+    <!-- Authentication Status -->
+    <div class="container my-3">
+        {% if user.is_authenticated %}
+        <p class="text-end m-3">You are logged in as <strong>{{ user.username }}</strong></p>
+        {% else %}
+        <p class="text-end m-3">You are not logged in</p>
+        {% endif %}
+    </div>
+
     <!-- Main Content -->
     <main class="container my-5 flex-grow-1">
         {% block content %}
