@@ -39,6 +39,24 @@
     {% else %}
         <p>No comments yet. Be the first to comment!</p>
     {% endif %}
+
+    <!-- Display Pending Comments -->
+    {% if user.is_authenticated and pending_comments %}
+        <hr>
+        <h3>Your Pending Comments</h3>
+        <ul>
+            {% for comment in pending_comments %}
+            <li style="opacity: 0.5;"> <!-- Visually transparent -->
+                <p><strong>{{ comment.author }}</strong>:</p>
+                <p>{{ comment.body }}</p>
+                <p class="text-muted">
+                    <small>Posted on {{ comment.created_on|date:"F j, Y, g:i a" }}</small>
+                    - <em>Waiting for approval</em>
+                </p>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
 
 <hr>

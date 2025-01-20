@@ -26,7 +26,13 @@ class PostDetail(FormMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()
+        # Approved comments visible to all
         context['comments'] = Comment.objects.filter(post=self.object, approved=True)
+        # Pending comments visible only to the logged-in user
+        if self.request.user.is_authenticated:
+            context['pending_comments'] = Comment.objects.filter(
+                post=self.object, approved=False, user=self.request.user
+            )
         return context
 
     def post(self, request, *args, **kwargs):

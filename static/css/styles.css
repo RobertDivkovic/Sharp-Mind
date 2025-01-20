@@ -236,3 +236,9 @@ img {
     height: auto;
     border-radius: 5px;
 }
+
+/* Pending comments styling */
+.comments-section li[style="opacity: 0.5;"] {
+    color: #888; /* Lighter text */
+    font-style: italic;
+}
