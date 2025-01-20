@@ -1,23 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}Submit Collaboration Request{% endblock %}
+{% block title %}About Us{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Submit Collaboration Request</h1>
-    <p>Fill out the form below to submit your request.</p>
+<h1>{{ about.title }}</h1>
+<p>{{ about.content }}</p>
 
-    <!-- Display messages -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+<hr>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+{% if user.is_authenticated %}
+<h3>Submit a Collaboration Request</h3>
+
+<!-- Display messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST" action="{% url 'collaboration' %}">
+    {% csrf_token %}
+    {{ collaboration_form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<hr>
+
+<!-- List Collaboration Requests with Edit and Delete Links -->
+<h3>Your Collaboration Requests</h3>
+<ul>
+    {% for request in collaboration_requests %}
+        <li>
+            <p><strong>Message:</strong> {{ request.message }}</p>
+            <p><strong>Submitted on:</strong> {{ request.created_on|date:"F j, Y, g:i a" }}</p>
+            <!-- Edit and Delete Links -->
+            <a href="{% url 'collaboration-edit' request.id %}" class="btn btn-secondary btn-sm">Edit</a>
+            <a href="{% url 'collaboration-delete' request.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </li>
+    {% empty %}
+        <p>No collaboration requests found.</p>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>Please <a href="{% url 'account_login' %}">log in</a> to submit a collaboration request.</p>
+{% endif %}
 {% endblock %}

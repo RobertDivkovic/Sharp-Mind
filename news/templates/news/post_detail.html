@@ -27,6 +27,12 @@
                 <p><strong>{{ comment.author }}</strong>:</p>
                 <p>{{ comment.body }}</p>
                 <p class="text-muted"><small>Posted on {{ comment.created_on|date:"F j, Y, g:i a" }}</small></p>
+                
+                <!-- Edit and Delete Links -->
+                {% if user.is_authenticated and user == comment.user %}
+                    <a href="{% url 'comment-edit' comment.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'comment-delete' comment.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>

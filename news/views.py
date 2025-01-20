@@ -1,13 +1,15 @@
-from django.shortcuts import render, get_object_or_404, redirect 
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from django.views.generic.edit import FormMixin
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.utils.timezone import now  # Corrected timezone import
 from .models import Post, Comment
 from .forms import CommentForm
 
-# Create your views here.
-
+# Post List View
 class PostList(generic.ListView):
     model = Post
     queryset = Post.objects.filter(status=1).order_by("-created_on")
@@ -15,15 +17,16 @@ class PostList(generic.ListView):
     context_object_name = "posts"
     paginate_by = 5
 
+# Post Detail View with Comment Form
 class PostDetail(FormMixin, generic.DetailView):
     model = Post
-    template_name = "news/post_detail.html"  # Path to the template for individual posts
+    template_name = "news/post_detail.html"
     form_class = CommentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = self.get_form()  # Add the comment form to the context
-        context['comments'] = Comment.objects.filter(post=self.object, approved=True)  # Add approved comments
+        context['form'] = self.get_form()
+        context['comments'] = Comment.objects.filter(post=self.object, approved=True)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -32,12 +35,14 @@ class PostDetail(FormMixin, generic.DetailView):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = self.object  # Associate comment with the post
-            comment.author = request.user.username  # Use the logged-in user's username
+            comment.author = request.user.username  # Set the logged-in user's username
+            comment.user = request.user  # Set the user field to the logged-in user
             comment.save()
-            messages.success(request, "Your comment has been submitted successfully!")
-            return redirect('post-detail', slug=self.object.slug)  # Redirect to the same post
+        messages.success(request, "Your comment has been submitted successfully!")
+        return redirect('post-detail', slug=self.object.slug)  # Redirect to the same post
         return self.form_invalid(form)
 
+# Posts By Author View
 class PostsByAuthor(generic.ListView):
     model = Post
     template_name = "news/posts_by_author.html"
@@ -45,10 +50,61 @@ class PostsByAuthor(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        username = self.kwargs['username']  # Get the 'username' from the URL
+        username = self.kwargs['username']
         return Post.objects.filter(author__username=username, status=1).order_by('-created_on')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['author'] = User.objects.get(username=self.kwargs['username'])
         return context
+
+# Post Update View
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content', 'status']
+    template_name = 'news/post_edit.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        messages.success(self.request, "The post has been updated successfully!")
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+# Post Delete View
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'news/post_confirm_delete.html'
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+# Comment Update View
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    fields = ['body']
+    template_name = 'news/comment_form.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.instance.updated_on = now()  # Update the timestamp when saving
+        messages.success(self.request, "Your comment has been updated successfully!")
+        return super().form_valid(form)
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
+
+# Comment Delete View
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'news/comment_confirm_delete.html'
+    success_url = reverse_lazy('home')
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
