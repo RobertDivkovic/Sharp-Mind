@@ -51,7 +51,7 @@
                 <p>{{ comment.body }}</p>
                 <p class="text-muted">
                     <small>Posted on {{ comment.created_on|date:"F j, Y, g:i a" }}</small>
-                    - <em>Waiting for approval</em>
+                    <p class="comment-pending">Waiting for comment approval</p>
                 </p>
             </li>
             {% endfor %}

@@ -242,3 +242,8 @@ img {
     color: #888; /* Lighter text */
     font-style: italic;
 }
+
+.comment-pending {
+    color: rgb(112, 49, 49);
+    font-weight: bold;
+}
