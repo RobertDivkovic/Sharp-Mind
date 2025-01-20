@@ -6,8 +6,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.utils.timezone import now  # Corrected timezone import
-from .models import Post, Comment
+from .models import Post, Comment, Vote
 from .forms import CommentForm
+from django.views import View
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
 
 # Post List View
 class PostList(generic.ListView):
@@ -47,6 +52,22 @@ class PostDetail(FormMixin, generic.DetailView):
         messages.success(request, "Your comment has been submitted successfully!")
         return redirect('post-detail', slug=self.object.slug)  # Redirect to the same post
         return self.form_invalid(form)
+
+# Profile View
+class ProfileView(generic.TemplateView):
+    template_name = "news/profile.html"
+
+    def get_context_data(self, **kwargs):
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username=username)
+        context = super().get_context_data(**kwargs)
+        context['profile_user'] = user
+        context['user_posts'] = Post.objects.filter(author=user)
+        context['user_comments'] = Comment.objects.filter(user=user)
+        context['user_votes'] = Vote.objects.filter(user=user)
+        context['upvoted_posts'] = Post.objects.filter(upvotes=user)
+        context['downvoted_posts'] = Post.objects.filter(downvotes=user)
+        return context
 
 # Posts By Author View
 class PostsByAuthor(generic.ListView):
@@ -114,3 +135,37 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.user
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
+
+class PostVoteView(LoginRequiredMixin, View):
+    @method_decorator(csrf_exempt)  # Exempt CSRF for now if necessary
+    def post(self, request, *args, **kwargs):
+        try:
+            post = get_object_or_404(Post, id=self.kwargs['post_id'])
+            data = json.loads(request.body)  # Parse JSON request body
+            vote_type = data.get('vote_type')  # Extract vote type
+
+            if vote_type == 'upvote':
+                # Handle upvote logic
+                if post.downvotes.filter(id=request.user.id).exists():
+                    post.downvotes.remove(request.user)
+                post.upvotes.add(request.user)
+            elif vote_type == 'downvote':
+                # Handle downvote logic
+                if post.upvotes.filter(id=request.user.id).exists():
+                    post.upvotes.remove(request.user)
+                post.downvotes.add(request.user)
+            else:
+                return JsonResponse({'error': 'Invalid vote type'}, status=400)
+
+            # Return updated vote counts
+            return JsonResponse({
+                'total_upvotes': post.upvotes.count(),
+                'total_downvotes': post.downvotes.count(),
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)

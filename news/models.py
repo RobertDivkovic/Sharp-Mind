@@ -16,6 +16,8 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
     excerpt = models.TextField(blank=True)
+    upvotes = models.ManyToManyField(User, related_name="upvoted_posts", blank=True)
+    downvotes = models.ManyToManyField(User, related_name="downvoted_posts", blank=True)
 
     class Meta:
         ordering = ["-created_on"]
@@ -25,6 +27,12 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f'/{self.slug}/'
+    
+    def total_upvotes(self):
+        return self.upvotes.count()
+
+    def total_downvotes(self):
+        return self.downvotes.count()
 
 class Comment(models.Model):
     post = models.ForeignKey(
@@ -48,3 +56,17 @@ class Comment(models.Model):
         if self.user:
             return f"Comment by {self.user.username} on {self.post}"
         return f"Comment by {self.author} on {self.post}"
+
+class Vote(models.Model):
+    VOTE_CHOICES = (
+        (1, "Upvote"),
+        (-1, "Downvote"),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="votes")
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name="votes")
+    vote = models.SmallIntegerField(choices=VOTE_CHOICES)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')  # A user can vote only once per post

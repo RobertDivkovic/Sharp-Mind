@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Profile of {{ profile_user.username }}{% endblock %}
+
+{% block content %}
+<h1>Profile of {{ profile_user.username }}</h1>
+
+<h2>Your Posts</h2>
+<ul>
+    {% for post in user_posts %}
+        <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <small>Published on {{ post.created_on|date:"F j, Y" }}</small>
+        </li>
+    {% empty %}
+        <p>You haven't published any posts yet.</p>
+    {% endfor %}
+</ul>
+
+<h2>Your Comments</h2>
+<ul>
+    {% for comment in user_comments %}
+        <li>
+            <p>On <a href="{{ comment.post.get_absolute_url }}">{{ comment.post.title }}</a>: {{ comment.body }}</p>
+            <small>Commented on {{ comment.created_on|date:"F j, Y" }}</small>
+        </li>
+    {% empty %}
+        <p>You haven't commented on any posts yet.</p>
+    {% endfor %}
+</ul>
+
+<h2>Voting Activity</h2>
+<ul>
+    {% for vote in user_votes %}
+        <li>
+            <p>
+                {{ vote.get_vote_display }} on 
+                <a href="{{ vote.post.get_absolute_url }}">{{ vote.post.title }}</a>
+                <small>on {{ vote.created_on|date:"F j, Y" }}</small>
+            </p>
+        </li>
+    {% empty %}
+        <p>You haven't voted on any posts yet.</p>
+    {% endfor %}
+</ul>
+
+<h3>Upvoted Posts</h3>
+<ul>
+    {% for post in upvoted_posts %}
+        <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+
+<h3>Downvoted Posts</h3>
+<ul>
+    {% for post in downvoted_posts %}
+        <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

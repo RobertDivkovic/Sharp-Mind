@@ -24,11 +24,10 @@
         <ul>
             {% for comment in comments %}
             <li>
-                <p><strong>{{ comment.author }}</strong>:</p>
+                <p><strong>{{ comment.user.username }}</strong>:</p>
                 <p>{{ comment.body }}</p>
                 <p class="text-muted"><small>Posted on {{ comment.created_on|date:"F j, Y, g:i a" }}</small></p>
                 
-                <!-- Edit and Delete Links -->
                 {% if user.is_authenticated and user == comment.user %}
                     <a href="{% url 'comment-edit' comment.pk %}" class="btn btn-sm btn-primary">Edit</a>
                     <a href="{% url 'comment-delete' comment.pk %}" class="btn btn-sm btn-danger">Delete</a>
@@ -40,33 +39,39 @@
         <p>No comments yet. Be the first to comment!</p>
     {% endif %}
 
-    <!-- Display Pending Comments -->
     {% if user.is_authenticated and pending_comments %}
         <hr>
         <h3>Your Pending Comments</h3>
         <ul>
             {% for comment in pending_comments %}
-            <li style="opacity: 0.5;"> <!-- Visually transparent -->
-                <p><strong>{{ comment.author }}</strong>:</p>
+            <li class="comment-pending">
+                <p><strong>{{ comment.user.username }}</strong>:</p>
                 <p>{{ comment.body }}</p>
                 <p class="text-muted">
                     <small>Posted on {{ comment.created_on|date:"F j, Y, g:i a" }}</small>
-                    <p class="comment-pending">Waiting for comment approval</p>
                 </p>
+                <p class="text-warning"><small>Waiting for comment approval</small></p>
             </li>
             {% endfor %}
         </ul>
     {% endif %}
 </div>
 
+<div class="post-voting">
+    <button class="btn btn-success vote-button" data-vote-type="upvote" data-post-id="{{ post.id }}">
+        Upvote ({{ post.total_upvotes }})
+    </button>
+    <button class="btn btn-danger vote-button" data-vote-type="downvote" data-post-id="{{ post.id }}">
+        Downvote ({{ post.total_downvotes }})
+    </button>
+</div>
+
 <hr>
 
-<!-- Comment Form -->
 <div class="col-md-4 card mb-4 mt-3">
     <div class="card-body">
         {% if user.is_authenticated %}
         <h3>Leave a comment:</h3>
-        <p>Posting as: {{ user.username }}</p>
         <form id="commentForm" method="post" style="margin-top: 1.3em;">
             {{ form|crispy }}
             {% csrf_token %}
@@ -79,4 +84,8 @@
 </div>
 
 <a href="{% url 'home' %}" class="btn btn-primary mt-4">Back to Homepage</a>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
