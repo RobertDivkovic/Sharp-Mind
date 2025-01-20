@@ -1,14 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic
+from django.views import generic, View
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.utils.timezone import now  # Corrected timezone import
-from .models import Post, Comment, Vote, Category
-from .forms import CommentForm
-from django.views import View
+from .models import Post, Comment, Vote, Category, ContactSubmission
+from .forms import CommentForm, ContactForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -16,6 +15,22 @@ from django.db.models import Count
 from django.core.cache import cache
 from datetime import timedelta
 import json
+
+# Contact View
+class ContactView(View):
+    template_name = "news/contact.html"
+
+    def get(self, request, *args, **kwargs):
+        form = ContactForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Message has been sent successfully! We will respond within 1 hour.")
+            return redirect("contact")
+        return render(request, self.template_name, {'form': form})
 
 # Post List View
 class PostList(generic.ListView):

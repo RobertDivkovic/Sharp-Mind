@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, Category
+from .models import Post, Comment, Category, ContactSubmission
 from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
@@ -43,6 +43,11 @@ class CommentAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "slug")
     prepopulated_fields = {"slug": ("name",)}
+
+@admin.register(ContactSubmission)
+class ContactSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'created_on')
+    search_fields = ('name', 'email', 'message')
 
 # Added these lines here for custom admin titles
 admin.site.site_header = "Sharp-Mind Admin"

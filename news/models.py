@@ -94,3 +94,12 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ('user', 'post')  # A user can vote only once per post
+
+class ContactSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name} on {self.created_on:%Y-%m-%d}"

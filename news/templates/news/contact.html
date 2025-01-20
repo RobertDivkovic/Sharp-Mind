@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<h1>Contact Us</h1>
+<p>If you have any issues or inquiries, please use the form below to reach out to us or call us directly.</p>
+
+<!-- Display messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<!-- Contact Form -->
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<hr>
+
+<!-- Contact Information -->
+<h2>Other Contact Details</h2>
+<p>Email: support@sharp-mind.com</p>
+<p>Phone: +123 456 6969</p>
+{% endblock %}
