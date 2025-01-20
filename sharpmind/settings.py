@@ -171,3 +171,10 @@ SUMMERNOTE_CONFIG = {
     'width': '100%',  # Full width of the editor
     'height': '400',  # Set height of the editor
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}

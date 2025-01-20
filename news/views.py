@@ -12,6 +12,9 @@ from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.db.models import Count
+from django.core.cache import cache
+from datetime import timedelta
 import json
 
 # Post List View
@@ -23,15 +26,40 @@ class PostList(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
+        # Get the base queryset for published posts
         queryset = Post.objects.filter(status=1).order_by("-created_on")
         category_slug = self.request.GET.get("category")
+
+        # Filter by category if provided
         if category_slug:
             queryset = queryset.filter(categories__slug=category_slug)
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()  # Include all categories for the dropdown/sidebar
+
+        # Include all categories for the dropdown/sidebar
+        context['categories'] = Category.objects.all()
+
+        # Cache and provide trending posts separately
+        cache_key = "trending_posts"
+        trending_posts = cache.get(cache_key)
+
+        if not trending_posts:
+            recent_period = now() - timedelta(days=7)
+            trending_posts = (
+                Post.objects.filter(status=1, created_on__gte=recent_period)
+                .annotate(
+                    trending_score=Count('upvotes') * 2 + Count('comments')
+                )
+                .order_by('-trending_score')[:5]
+            )
+            cache.set(cache_key, trending_posts, 600)  # Cache for 10 minutes
+
+        # Add trending posts to the context
+        context['trending_posts'] = trending_posts
+
         return context
 
 # Category Post List View

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.utils.timezone import now
+from datetime import timedelta
 
 # Create your models here.
 
@@ -44,6 +46,17 @@ class Post(models.Model):
 
     def total_downvotes(self):
         return self.downvotes.count()
+
+    def calculate_trending_score(self):
+        # Consider posts from the past 7 days as trending
+        recent_period = now() - timedelta(days=7)
+        if self.created_on < recent_period:
+            return 0
+        
+        # Calculate trending score as a combination of upvotes and comments
+        upvote_score = self.upvotes.count() * 2  # Upvotes are weighted more
+        comment_score = self.comments.count()   # One point per comment
+        return upvote_score + comment_score
 
 class Comment(models.Model):
     post = models.ForeignKey(
