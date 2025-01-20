@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Added this for AllAuth
     path('about/', include('about.urls')),  # About page
+     path('summernote/', include('django_summernote.urls')),
     path('', include('news.urls')),  # Homepage
 ]

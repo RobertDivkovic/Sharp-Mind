@@ -10,13 +10,14 @@
     {% if posts %}
         <ul>
             {% for post in posts %}
-                <li>
-                    {% if "placeholder" in post.featured_image.url %}
-                        <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
-                    {% else %}
-                        <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
-                    {% endif %}
-
+                <li class="post-item">
+                    <div class="image-container">
+                        {% if "placeholder" in post.featured_image.url %}
+                            <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
+                        {% else %}
+                            <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                        {% endif %}
+                    </div>
                     <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
                     <p>{{ post.excerpt }}</p>
                     <small>Published on {{ post.created_on|date:"F j, Y" }}</small>
@@ -27,13 +28,13 @@
         <div class="pagination">
             {% if is_paginated %}
                 {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-secondary">Previous</a>
                 {% endif %}
                 {% for num in page_obj.paginator.page_range %}
-                    <a href="?page={{ num }}">{{ num }}</a>
+                    <a href="?page={{ num }}" class="btn btn-light">{{ num }}</a>
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">Next</a>
                 {% endif %}
             {% endif %}
         </div>

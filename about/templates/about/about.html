@@ -1,10 +1,23 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}About Us{% endblock %}
 
 {% block content %}
 <h1>{{ about.title }}</h1>
-<p>{{ about.content }}</p>
+
+<div class="row">
+    <div class="col-12 col-md-4 text-center">
+        {% if "placeholder" in about.profile_image.url %}
+            <img src="{% static 'images/library.png' %}" width="75%" alt="placeholder image">
+        {% else %}
+            <img src="{{ about.profile_image.url }}" width="75%" alt="{{ about.title }}">
+        {% endif %}
+    </div>
+    <div class="col-12 col-md-8">
+        <p>{{ about.content }}</p>
+    </div>
+</div>
 
 <hr>
 
