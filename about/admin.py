@@ -1,4 +1,14 @@
 from django.contrib import admin
-from .models import About
+from .models import About, CollaborationRequest
 
-admin.site.register(About)
+# Register the About model
+@admin.register(About)
+class AboutAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+# Register the CollaborationRequest model
+@admin.register(CollaborationRequest)
+class CollaborationRequestAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'created_on')
+    search_fields = ('name', 'email', 'message')
+    list_filter = ('created_on',)
