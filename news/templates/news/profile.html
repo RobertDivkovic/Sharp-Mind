@@ -10,6 +10,13 @@
         <li>
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
             <small>Published on {{ post.created_on|date:"F j, Y" }}</small>
+            <div>
+                <a href="{% url 'post-edit' post.slug %}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="{% url 'post-delete' post.slug %}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Are you sure you want to delete this post?');">
+                    Delete
+                </a>
+            </div>
         </li>
     {% empty %}
         <p>You haven't published any posts yet.</p>
@@ -47,6 +54,8 @@
 <ul>
     {% for post in upvoted_posts %}
         <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+    {% empty %}
+        <p>You haven't upvoted any posts yet.</p>
     {% endfor %}
 </ul>
 
@@ -54,6 +63,8 @@
 <ul>
     {% for post in downvoted_posts %}
         <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+    {% empty %}
+        <p>You haven't downvoted any posts yet.</p>
     {% endfor %}
 </ul>
 {% endblock %}

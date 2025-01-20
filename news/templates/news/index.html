@@ -41,7 +41,14 @@
         <div class="col-md-9">
             <h1>Welcome to Sharp-Mind</h1>
             <p>Explore the latest posts below:</p>
-
+        
+            <!-- Show "Publish your post" link for logged-in users -->
+            {% if user.is_authenticated %}
+                <div class="mb-3">
+                    <a href="{% url 'post-create' %}" class="btn btn-success">Publish your post</a>
+                </div>
+            {% endif %}
+        
             {% if posts %}
                 <ul class="list-unstyled">
                     {% for post in posts %}
@@ -65,7 +72,7 @@
                     </li>
                     {% endfor %}
                 </ul>
-
+        
                 <div class="pagination">
                     {% if is_paginated %}
                         {% if page_obj.has_previous %}

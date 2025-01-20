@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic, View
 from django.urls import reverse_lazy
-from django.views.generic.edit import FormMixin, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin, UpdateView, DeleteView, CreateView
+from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
@@ -157,6 +158,23 @@ class PostsByAuthor(generic.ListView):
         context['author'] = User.objects.get(username=self.kwargs['username'])
         return context
 
+# Post Create View
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    template_name = "news/post_create.html"
+    fields = ['title', 'featured_image', 'content', 'categories', 'status']
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Associate the logged-in user as the author
+        form.instance.slug = form.cleaned_data['title'].lower().replace(' ', '-')  # Auto-generate slug
+        messages.success(self.request, "Your post has been successfully created!")
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()  # Provide categories for selection
+        return context
+
 # Post Update View
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -172,11 +190,37 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         post = self.get_object()
         return self.request.user == post.author
 
-# Post Delete View
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'news/post_confirm_delete.html'
-    success_url = '/'
+    success_url = reverse_lazy('profile')  # Redirect to the user's profile page after deletion
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "The post has been deleted successfully!")
+        return super().delete(request, *args, **kwargs)
+    
+    def get_success_url(self):
+        # Redirect to the user's profile page after deletion
+        return reverse_lazy('profile', kwargs={'username': self.request.user.username})
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+# Post Edit View
+class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    template_name = 'news/post_edit.html'
+    fields = ['title', 'content', 'categories', 'featured_image', 'status']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        messages.success(self.request, "The post has been updated successfully!")
+        return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
