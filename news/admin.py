@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
@@ -11,7 +11,7 @@ class CommentInline(admin.TabularInline):
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
     list_display = ("title", "slug", "status", "created_on", "author")
-    list_filter = ("status", "created_on")
+    list_filter = ("status", "created_on", "categories")
     search_fields = ["title", "content", "excerpt"]
     prepopulated_fields = {"slug": ("title",)}
     summernote_fields = ("content",)  # Apply Summernote to the 'content' field
@@ -37,6 +37,12 @@ class CommentAdmin(admin.ModelAdmin):
         """
         return obj.user.username if obj.user else obj.author
     get_user_or_author.short_description = "User/Author"
+
+# Register Category
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug")
+    prepopulated_fields = {"slug": ("name",)}
 
 # Added these lines here for custom admin titles
 admin.site.site_header = "Sharp-Mind Admin"

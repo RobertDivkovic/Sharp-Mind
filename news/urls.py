@@ -1,7 +1,7 @@
 from . import views
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import PostList, PostDetail, PostsByAuthor, CommentUpdateView, CommentDeleteView, ProfileView, PostVoteView
+from .views import PostList, PostDetail, PostsByAuthor, CommentUpdateView, CommentDeleteView, ProfileView, PostVoteView, CategoryPostList
 
 urlpatterns = [
     path('', views.PostList.as_view(), name='home'),  # Homepage URL
@@ -11,4 +11,5 @@ urlpatterns = [
     path('comment/delete/<int:pk>/', CommentDeleteView.as_view(), name='comment-delete'),
     path('profile/<str:username>/', ProfileView.as_view(), name='profile'),
     path('post/vote/<int:post_id>/', PostVoteView.as_view(), name='post-vote'),
+    path('category/<slug:slug>/', CategoryPostList.as_view(), name='category-posts'),
 ]

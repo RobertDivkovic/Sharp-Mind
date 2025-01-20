@@ -4,6 +4,16 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
 class Post(models.Model):
     STATUS = ((0, "Draft"), (1, "Published"))
 
@@ -18,6 +28,7 @@ class Post(models.Model):
     excerpt = models.TextField(blank=True)
     upvotes = models.ManyToManyField(User, related_name="upvoted_posts", blank=True)
     downvotes = models.ManyToManyField(User, related_name="downvoted_posts", blank=True)
+    categories = models.ManyToManyField(Category, related_name="posts", blank=True)
 
     class Meta:
         ordering = ["-created_on"]

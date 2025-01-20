@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.utils.timezone import now  # Corrected timezone import
-from .models import Post, Comment, Vote
+from .models import Post, Comment, Vote, Category
 from .forms import CommentForm
 from django.views import View
 from django.http import JsonResponse
@@ -21,6 +21,35 @@ class PostList(generic.ListView):
     template_name = "news/index.html"
     context_object_name = "posts"
     paginate_by = 5
+
+    def get_queryset(self):
+        queryset = Post.objects.filter(status=1).order_by("-created_on")
+        category_slug = self.request.GET.get("category")
+        if category_slug:
+            queryset = queryset.filter(categories__slug=category_slug)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()  # Include all categories for the dropdown/sidebar
+        return context
+
+# Category Post List View
+class CategoryPostList(generic.ListView):
+    model = Post
+    template_name = "news/index.html"
+    context_object_name = "posts"
+    paginate_by = 5
+
+    def get_queryset(self):
+        category = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return Post.objects.filter(categories=category, status=1).order_by("-created_on")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['selected_category'] = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return context
 
 # Post Detail View with Comment Form
 class PostDetail(FormMixin, generic.DetailView):
