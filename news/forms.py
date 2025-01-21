@@ -9,7 +9,7 @@ class CommentForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactSubmission
-        fields = ['name', 'email', 'message']
+        fields = ['name', 'email', 'subject', 'message']
         widgets = {
             'message': forms.Textarea(attrs={'rows': 4}),
         }

@@ -3,27 +3,62 @@
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
-<h1>Contact Us</h1>
-<p>If you have any issues or inquiries, please use the form below to reach out to us or call us directly.</p>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0 text-center">Get in Touch</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted text-center mb-4">We'd love to hear from you! Please fill out the form below to reach us.</p>
 
-<!-- Display messages -->
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-    {% endfor %}
-{% endif %}
+                    <form method="POST" action="{% url 'contact' %}">
+                        {% csrf_token %}
 
-<!-- Contact Form -->
-<form method="POST" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
 
-<hr>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
 
-<!-- Contact Information -->
-<h2>Other Contact Details</h2>
-<p>Email: support@sharp-mind.com</p>
-<p>Phone: +123 456 6969</p>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" name="subject" id="subject" class="form-control" placeholder="Enter the subject" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea name="message" id="message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="text-center">Our Contact Information</h5>
+                    <ul class="list-unstyled mt-4">
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Main Street, Cityville, Country</li>
+                        <li><i class="fas fa-phone-alt me-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope me-2"></i><a href="mailto:contact@sharpmind.com">contact@sharpmind.com</a></li>
+                        <li><i class="fas fa-globe me-2"></i><a href="https://sharpmind.com" target="_blank">www.sharpmind.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

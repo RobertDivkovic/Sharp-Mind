@@ -98,6 +98,7 @@ class Vote(models.Model):
 class ContactSubmission(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
+    subject = models.CharField(max_length=255)
     message = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
 

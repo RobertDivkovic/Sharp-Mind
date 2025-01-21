@@ -46,8 +46,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'created_on')
-    search_fields = ('name', 'email', 'message')
+    list_display = ('name', 'email', 'subject', 'created_on')
+    search_fields = ('name', 'email', 'subject', 'message')
 
 # Added these lines here for custom admin titles
 admin.site.site_header = "Sharp-Mind Admin"

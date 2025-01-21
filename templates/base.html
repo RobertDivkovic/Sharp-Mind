@@ -1,9 +1,5 @@
 {% load static %}
 
-{% url 'home' as home_url %}
-{% url 'account_login' as login_url %}
-{% url 'account_signup' as signup_url %}
-{% url 'account_logout' as logout_url %}
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -30,17 +26,17 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <!-- CSRF Token-->
+    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 
-<body class="d-flex flex-column h-100 bg-light">
+<body class="d-flex flex-column h-100" style="background-color: #f2f5f7; color: #34495e;">
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg" style="background-color: #34495e;">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
-                <span class="text-primary">Sharp</span>-Mind
+            <a class="navbar-brand fw-bold text-light" href="{% url 'home' %}" style="font-size: 1.5rem;">
+                Sharp-Mind
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,33 +45,31 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %} text-light"
                             href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %} text-light"
                             href="{% url 'about' %}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
-                    </li>                    
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %} text-light"
+                            href="{% url 'contact' %}">Contact</a>
+                    </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %} text-light"
                             href="{% url 'profile' user.username %}">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'account_logout' %}active{% endif %}"
-                            href="{% url 'account_logout' %}">Logout</a>
+                        <a class="nav-link text-light" href="{% url 'account_logout' %}">Logout</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'account_signup' %}active{% endif %}"
-                            href="{% url 'account_signup' %}">Register</a>
+                        <a class="nav-link text-light" href="{% url 'account_signup' %}">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'account_login' %}active{% endif %}"
-                            href="{% url 'account_login' %}">Login</a>
+                        <a class="nav-link text-light" href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -104,29 +98,67 @@
     </div>
 
     <!-- Main Content -->
-    <main class="container my-5 flex-grow-1">
+    <main class="container my-5 flex-grow-1 bg-white p-4 shadow rounded">
         {% block content %}
-        <!-- Page-specific content goes here -->
+        <div class="accordion" id="homeAccordion">
+            <!-- Categories Section -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="categoriesHeading">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#categoriesCollapse" aria-expanded="true" aria-controls="categoriesCollapse">
+                        Categories
+                    </button>
+                </h2>
+                <div id="categoriesCollapse" class="accordion-collapse collapse show" aria-labelledby="categoriesHeading" data-bs-parent="#homeAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Technology</li>
+                            <li>Health</li>
+                            <li>Science</li>
+                            <li>Travel</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trending Posts Section -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="trendingHeading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trendingCollapse" aria-expanded="false" aria-controls="trendingCollapse">
+                        Trending Posts
+                    </button>
+                </h2>
+                <div id="trendingCollapse" class="accordion-collapse collapse" aria-labelledby="trendingHeading" data-bs-parent="#homeAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li><a href="#">How AI is Changing the World</a></li>
+                            <li><a href="#">Top 10 Travel Destinations for 2025</a></li>
+                            <li><a href="#">The Future of Space Exploration</a></li>
+                            <li><a href="#">Healthy Living: Tips and Tricks</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="footer bg-dark text-white py-3">
+    <footer class="footer py-4 mt-auto" style="background-color: #34495e; color: #ecf0f1;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
                     <p class="mb-0">&copy; 2025 Sharp-Mind Blog. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="text-white mx-2" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-white mx-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-white mx-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-white mx-2" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="text-light mx-2" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank" class="text-light mx-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" class="text-light mx-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="text-light mx-2" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col text-center">
-                    <p class="m-0 text-center text-white">
+                    <p class="m-0">
                         {% block copyright %}
                         Made by Robert Divkovic
                         {% endblock copyright %}

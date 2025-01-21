@@ -1,60 +1,52 @@
 /* General Body Styling */
 body {
-    background-color: #fefefe;
+    background-color: #f2f5f7;
     font-family: 'Roboto', sans-serif;
-    color: #343a40;
+    color: #34495e;
     margin: 0;
     padding: 0;
 }
 
 /* Navigation Bar */
 .navbar {
-    background-color: #ffffff;
-    border-bottom: 2px solid #f0f0f0;
+    background-color: #34495e; /* Dark soothing color */
+    border-bottom: 1px solid #2c3e50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
 }
 
 .navbar-brand {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #0077cc;
+    color: #ecf0f1;
     text-transform: uppercase;
 }
 
 .navbar-brand:hover {
-    color: #0056a8;
+    color: #bdc3c7;
 }
 
 .navbar-nav .nav-link {
     font-size: 1rem;
     font-weight: 500;
-    color: #555555;
-}
-
-.navbar-nav .nav-link.active {
-    color: #0077cc;
-    font-weight: bold;
+    color: #ecf0f1;
+    margin-right: 15px;
+    transition: color 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #0056a8;
-}
-
-/* Footer */
-.footer {
-    background-color: #343a40;
-    color: #ffffff;
-    padding: 15px 0;
-}
-
-.footer p, .footer a {
-    font-size: 0.9rem;
-    color: #bbbbbb;
-    margin: 0;
-}
-
-.footer a:hover {
-    color: #0077cc;
+    color: #bdc3c7;
     text-decoration: underline;
+}
+
+.navbar-nav .nav-link.active {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border: none;
+    outline: none;
 }
 
 /* Main Content Styling */
@@ -67,9 +59,8 @@ main {
     border-radius: 8px;
 }
 
-/* Heading Styles */
 h1, h2, h3 {
-    color: #343a40;
+    color: #34495e;
     font-weight: 700;
     margin-bottom: 15px;
 }
@@ -86,41 +77,35 @@ h3 {
     font-size: 1.5rem;
 }
 
-/* Post List and Links */
-ul {
-    list-style: none;
-    padding: 0;
+/* Footer Styling */
+.footer {
+    background-color: #34495e; /* Same as header */
+    color: #ecf0f1;
+    padding: 20px 0;
+    margin-top: 20px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
-ul li {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #f0f0f0;
+.footer p, .footer a {
+    font-size: 0.9rem;
+    color: #bdc3c7;
+    margin: 0;
+    transition: color 0.3s ease;
 }
 
-ul li:last-child {
-    border-bottom: none;
-}
-
-a.post-link {
-    text-decoration: none;
-    color: #0077cc;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-a.post-link:hover {
-    color: #0056a8;
+.footer a:hover {
+    color: #ecf0f1;
     text-decoration: underline;
 }
 
-/* Buttons */
+/* Button Styling */
 .btn {
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     font-weight: bold;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .btn-primary {
@@ -133,16 +118,9 @@ a.post-link:hover {
     color: #ffffff;
 }
 
-.btn-danger {
-    background-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
 .btn-secondary {
     background-color: #6c757d;
+    color: #ffffff;
 }
 
 .btn-secondary:hover {
@@ -157,13 +135,15 @@ a.post-link:hover {
     background-color: #218838;
 }
 
-/* Links */
-.link-primary {
-    color: #007bff;
+/* Links Styling */
+a {
+    color: #0077cc;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.link-primary:hover {
+a:hover {
+    color: #0056a8;
     text-decoration: underline;
 }
 
@@ -175,6 +155,7 @@ a.post-link:hover {
     padding: 5px 10px;
     border-radius: 5px;
     border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
 }
 
 .pagination a:hover {
@@ -188,13 +169,19 @@ a.post-link:hover {
     border-color: #0077cc;
 }
 
-/* Custom Card Design */
+/* Card Design */
 .card {
     border: 1px solid #f0f0f0;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #f8f9fa;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .card img {
@@ -237,13 +224,23 @@ img {
     border-radius: 5px;
 }
 
-/* Pending comments styling */
-.comments-section li[style="opacity: 0.5;"] {
-    color: #888; /* Lighter text */
-    font-style: italic;
-}
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
 
-.comment-pending {
-    color: rgb(112, 49, 49);
-    font-weight: bold;
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 15px;
+    }
 }
