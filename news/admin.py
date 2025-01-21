@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Post, Comment, Category, ContactSubmission
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+from .models import Post, Comment, Category, ContactSubmission, Profile
 from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
@@ -48,6 +50,33 @@ class CategoryAdmin(admin.ModelAdmin):
 class ContactSubmissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject', 'created_on')
     search_fields = ('name', 'email', 'subject', 'message')
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'profile_picture')  # Show the user and profile picture in the list view
+    search_fields = ('user__username',)  # Allow searching by username
+    list_filter = ('user__is_active',)  # Add filters based on user status
+    fields = ('user', 'profile_picture')  # Allow editing of user and profile picture
+    ordering = ('user__username',)
+
+# Inline for Profile (to edit profile picture in user details)
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False  # Prevent accidental deletion of profiles
+    verbose_name_plural = 'Profile'
+    fields = ('profile_picture',)  # Allow editing the profile picture
+
+# Custom UserAdmin to include ProfileInline
+class CustomUserAdmin(UserAdmin):
+    inlines = (ProfileInline,)  # Add the ProfileInline to UserAdmin
+
+    # Optional: Add additional display fields or filters
+    list_display = ('username', 'email', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_superuser', 'is_active')
+
+# Unregister the default UserAdmin and register the customized version
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 
 # Added these lines here for custom admin titles
 admin.site.site_header = "Sharp-Mind Admin"
