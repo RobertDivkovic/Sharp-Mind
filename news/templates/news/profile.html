@@ -35,20 +35,7 @@
     {% endfor %}
 </ul>
 
-<h2>Voting Activity</h2>
-<ul>
-    {% for vote in user_votes %}
-        <li>
-            <p>
-                {{ vote.get_vote_display }} on 
-                <a href="{{ vote.post.get_absolute_url }}">{{ vote.post.title }}</a>
-                <small>on {{ vote.created_on|date:"F j, Y" }}</small>
-            </p>
-        </li>
-    {% empty %}
-        <p>You haven't voted on any posts yet.</p>
-    {% endfor %}
-</ul>
+<h2>Voting Activity :</h2>
 
 <h3>Upvoted Posts</h3>
 <ul>
