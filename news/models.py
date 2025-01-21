@@ -104,3 +104,10 @@ class ContactSubmission(models.Model):
 
     def __str__(self):
         return f"Message from {self.name} on {self.created_on:%Y-%m-%d}"
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    profile_picture = CloudinaryField('image', default='placeholder', blank=True)  # Add profile picture field
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"

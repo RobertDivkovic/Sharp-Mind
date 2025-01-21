@@ -5,89 +5,97 @@
 
 {% block content %}
 <div class="container my-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <!-- Profile Sidebar -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <img src="{% static 'images/user_avatar.png' %}" class="rounded-circle mb-3" alt="User Avatar" width="120">
-                    <h5 class="card-title">{{ profile_user.username }}</h5>
+                    <!-- Centered Profile Picture -->
+                    <img src="{{ profile_user.profile.profile_picture.url }}" 
+                         class="rounded-circle mb-3" 
+                         alt="User Avatar" 
+                         width="150" 
+                         style="border: 5px solid #ddd;">
+
+                    <!-- Stylish Text Below Picture -->
+                    <h3 class="card-title fw-bold text-primary">{{ profile_user.username }}</h3>
                     <p class="text-muted">{{ profile_user.email }}</p>
+                    <p class="text-secondary">"Stay curious, keep learning!"</p>
+
+                    <!-- Form for Profile Picture Update -->
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-outline-primary mt-3">Update Profile Picture</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Profile Content -->
-        <div class="col-md-8">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5>Your Posts</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for post in user_posts %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <a href="{{ post.get_absolute_url }}" class="fw-bold">{{ post.title }}</a>
-                                    <small class="d-block text-muted">Published on {{ post.created_on|date:"F j, Y" }}</small>
-                                </div>
-                                <div>
-                                    <a href="{% url 'post-edit' post.slug %}" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="{% url 'post-delete' post.slug %}" class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Are you sure you want to delete this post?');">
-                                        Delete
-                                    </a>
-                                </div>
-                            </li>
-                        {% empty %}
-                            <p class="text-muted">You haven't published any posts yet.</p>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+    <!-- User Posts Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white text-center">
+            <h5>Your Posts</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for post in user_posts %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{{ post.get_absolute_url }}" class="fw-bold">{{ post.title }}</a>
+                            <small class="d-block text-muted">Published on {{ post.created_on|date:"F j, Y" }}</small>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p class="text-muted text-center">You haven't published any posts yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
-                    <h5>Your Comments</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for comment in user_comments %}
-                            <li class="list-group-item">
-                                <p>On <a href="{{ comment.post.get_absolute_url }}">{{ comment.post.title }}</a>: {{ comment.body }}</p>
-                                <small class="d-block text-muted">Commented on {{ comment.created_on|date:"F j, Y" }}</small>
-                            </li>
-                        {% empty %}
-                            <p class="text-muted">You haven't commented on any posts yet.</p>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+    <!-- User Comments Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white text-center">
+            <h5>Your Comments</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for comment in user_comments %}
+                    <li class="list-group-item">
+                        <p>On <a href="{{ comment.post.get_absolute_url }}">{{ comment.post.title }}</a>: {{ comment.body }}</p>
+                        <small class="d-block text-muted">Commented on {{ comment.created_on|date:"F j, Y" }}</small>
+                    </li>
+                {% empty %}
+                    <p class="text-muted text-center">You haven't commented on any posts yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
-            <div class="card shadow-sm">
-                <div class="card-header bg-info text-white">
-                    <h5>Voting Activity</h5>
-                </div>
-                <div class="card-body">
-                    <h6>Upvoted Posts</h6>
-                    <ul class="list-group mb-3">
-                        {% for post in upvoted_posts %}
-                            <li class="list-group-item"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                        {% empty %}
-                            <p class="text-muted">You haven't upvoted any posts yet.</p>
-                        {% endfor %}
-                    </ul>
+    <!-- Voting Activity Section -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white text-center">
+            <h5>Voting Activity</h5>
+        </div>
+        <div class="card-body">
+            <h6>Upvoted Posts</h6>
+            <ul class="list-group mb-3">
+                {% for post in upvoted_posts %}
+                    <li class="list-group-item"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                {% empty %}
+                    <p class="text-muted text-center">You haven't upvoted any posts yet.</p>
+                {% endfor %}
+            </ul>
 
-                    <h6>Downvoted Posts</h6>
-                    <ul class="list-group">
-                        {% for post in downvoted_posts %}
-                            <li class="list-group-item"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                        {% empty %}
-                            <p class="text-muted">You haven't downvoted any posts yet.</p>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+            <h6>Downvoted Posts</h6>
+            <ul class="list-group">
+                {% for post in downvoted_posts %}
+                    <li class="list-group-item"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                {% empty %}
+                    <p class="text-muted text-center">You haven't downvoted any posts yet.</p>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>

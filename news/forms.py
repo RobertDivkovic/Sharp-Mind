@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, ContactSubmission, Post
+from .models import Comment, ContactSubmission, Post, Profile
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -22,3 +22,8 @@ class PostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 5}),
             'categories': forms.CheckboxSelectMultiple(),
         }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile_picture'] # Include profile_picture field

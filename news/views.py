@@ -7,14 +7,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.utils.timezone import now  # Corrected timezone import
-from .models import Post, Comment, Vote, Category, ContactSubmission
-from .forms import CommentForm, ContactForm
+from .models import Post, Comment, Vote, Category, ContactSubmission, Profile
+from .forms import CommentForm, ContactForm, ProfileForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db.models import Count
 from django.core.cache import cache
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
 import json
 
 # Contact View
@@ -285,3 +286,35 @@ class PostVoteView(LoginRequiredMixin, View):
             })
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def profile_view(request, username):
+    user = get_object_or_404(User, username=username)
+    profile, created = Profile.objects.get_or_create(user=user)
+
+    # Fetch user posts
+    user_posts = Post.objects.filter(author=user)
+
+    # Fetch user comments
+    user_comments = Comment.objects.filter(user=user)
+
+    # Fetch voting activity
+    upvoted_posts = Post.objects.filter(upvotes=user)
+    downvoted_posts = Post.objects.filter(downvotes=user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', username=user.username)
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'news/profile.html', {
+        'form': form,
+        'profile_user': user,
+        'user_posts': user_posts,
+        'user_comments': user_comments,
+        'upvoted_posts': upvoted_posts,
+        'downvoted_posts': downvoted_posts,
+    })

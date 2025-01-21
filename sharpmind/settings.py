@@ -27,7 +27,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["8000-robertdivkovi-sharpmind-bv4e17df5g7.ws.codeinstitute-ide.net", ".herokuapp.com"]
 
@@ -175,3 +175,8 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Ensure BASE_DIR is defined in your settings
+
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
