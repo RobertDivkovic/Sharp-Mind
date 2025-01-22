@@ -26,4 +26,7 @@ class PostForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['profile_picture'] # Include profile_picture field
+        fields = ['profile_picture']
+        widgets = {
+            'profile_picture': forms.FileInput(attrs={'required': True}),
+        }
