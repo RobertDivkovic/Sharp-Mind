@@ -7,7 +7,7 @@
 <p><strong>{{ object.title }}</strong></p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Confirm</button>
-    <a href="{% url 'profile' request.user.username %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-danger me-3" aria-label="Confirm Delete">Confirm</button>
+    <a href="{% url 'profile' request.user.username %}" class="btn btn-secondary" aria-label="Cancel Delete">Cancel</a>
 </form>
 {% endblock %}

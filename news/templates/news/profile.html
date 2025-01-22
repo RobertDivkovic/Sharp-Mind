@@ -15,7 +15,7 @@
                          class="rounded-circle mb-3" 
                          alt="User Avatar" 
                          width="150" 
-                         style="border: 5px solid #ddd;">
+                         style="border: 5px solid #161515;">
 
                     <!-- Stylish Text Below Picture -->
                     <h3 class="card-title fw-bold text-primary">{{ profile_user.username }}</h3>
@@ -45,6 +45,10 @@
                         <div>
                             <a href="{{ post.get_absolute_url }}" class="fw-bold">{{ post.title }}</a>
                             <small class="d-block text-muted">Published on {{ post.created_on|date:"F j, Y" }}</small>
+                        </div>
+                        <div>
+                            <a href="{% url 'post-edit' post.slug %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{% url 'post-delete' post.slug %}" class="btn btn-sm btn-outline-danger">Delete</a>
                         </div>
                     </li>
                 {% empty %}
