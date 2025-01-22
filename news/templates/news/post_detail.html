@@ -6,18 +6,22 @@
 
 {% block content %}
 <article>
-    <h1>{{ post.title }}</h1>
+    <!-- Title and Author -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>{{ post.title }}</h1>
+        <p class="text-muted" style="font-size: 0.9rem;">By: <strong>{{ post.author.username }}</strong></p>
+    </div>
     <p><strong>Published:</strong> {{ post.created_on|date:"F j, Y" }}</p>
     <hr>
     <div>
         {{ post.content|safe }}
     </div>
+
     {% if post.featured_image %}
     <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid mt-4">
     {% else %}
     <img src="{% static 'images/default.jpg' %}" alt="placeholder image" class="img-fluid mt-4">
     {% endif %}
-
 </article>
 
 <hr>
