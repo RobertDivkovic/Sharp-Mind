@@ -4,91 +4,123 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <!-- Sidebar or dropdown for categories -->
-        <div class="col-md-3">
-            <h3>Categories</h3>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a href="{% url 'home' %}">All Categories</a>
-                </li>
-                {% for category in categories %}
-                <li class="list-group-item">
-                    <a href="{% url 'category-posts' category.slug %}">{{ category.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-
-            <!-- Trending Posts -->
-            <div class="mt-4">
-                <h3>Trending Posts</h3>
-                {% if trending_posts %}
-                    <ul class="list-group">
-                        {% for post in trending_posts %}
-                        <li class="list-group-item">
-                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            <small class="d-block text-muted">Trending Score: {{ post.calculate_trending_score }}</small>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No trending posts available.</p>
-                {% endif %}
+<div class="row">
+    <!-- Sidebar with collapsible categories and trending posts -->
+    <div class="col-md-3">
+        <!-- Categories Dropdown -->
+        <div class="accordion mb-3" id="categoriesAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="categoriesHeading">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#categoriesCollapse" aria-expanded="true" aria-controls="categoriesCollapse">
+                        Categories
+                    </button>
+                </h2>
+                <div id="categoriesCollapse" class="accordion-collapse collapse show"
+                    aria-labelledby="categoriesHeading" data-bs-parent="#categoriesAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{% url 'home' %}">All Categories</a>
+                            </li>
+                            {% for category in categories %}
+                            <li class="list-group-item">
+                                <a href="{% url 'category-posts' category.slug %}">{{ category.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Main content for posts -->
-        <div class="col-md-9">
-            <h1>Welcome to Sharp-Mind</h1>
-            <p>Explore the latest posts below:</p>
-        
-            <!-- Show "Publish your post" link for logged-in users -->
-            {% if user.is_authenticated %}
-                <div class="mb-3">
-                    <a href="{% url 'post-create' %}" class="btn btn-success">Publish your post</a>
-                </div>
-            {% endif %}
-        
-            {% if posts %}
-                <ul class="list-unstyled">
-                    {% for post in posts %}
-                    <li class="post-item mb-4">
-                        <div class="image-container">
-                            {% if "placeholder" in post.featured_image.url %}
-                                <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
-                            {% else %}
-                                <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
-                            {% endif %}
-                        </div>
-                        <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-                        <p>{{ post.excerpt }}</p>
-                        <small>Published on {{ post.created_on|date:"F j, Y" }}</small>
-                        <p>
-                            <strong>Categories:</strong>
-                            {% for category in post.categories.all %}
-                                <a href="{% url 'category-posts' category.slug %}" class="badge bg-primary">{{ category.name }}</a>
+        <!-- Trending Posts Dropdown -->
+        <div class="accordion" id="trendingAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="trendingHeading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#trendingCollapse" aria-expanded="false" aria-controls="trendingCollapse">
+                        Trending Posts
+                    </button>
+                </h2>
+                <div id="trendingCollapse" class="accordion-collapse collapse" aria-labelledby="trendingHeading"
+                    data-bs-parent="#trendingAccordion">
+                    <div class="accordion-body">
+                        {% if trending_posts %}
+                        <ul class="list-group">
+                            {% for post in trending_posts %}
+                            <li class="list-group-item">
+                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                <small class="d-block text-muted">Trending Score:
+                                    {{ post.calculate_trending_score }}</small>
+                            </li>
                             {% endfor %}
-                        </p>
-                    </li>
-                    {% endfor %}
-                </ul>
-        
-                <div class="pagination">
-                    {% if is_paginated %}
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-secondary">Previous</a>
+                        </ul>
+                        {% else %}
+                        <p>No trending posts available.</p>
                         {% endif %}
-                        {% for num in page_obj.paginator.page_range %}
-                            <a href="?page={{ num }}" class="btn btn-light">{{ num }}</a>
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">Next</a>
-                        {% endif %}
-                    {% endif %}
+                    </div>
                 </div>
-            {% else %}
-                <p>No posts available.</p>
-            {% endif %}
+            </div>
         </div>
     </div>
+
+    <!-- Main content for posts -->
+    <div class="col-md-9">
+        <div class="text-center">
+            <h1>Welcome to Sharp-Mind</h1>
+
+            <h4>Explore the latest posts below</h4>
+        </div>
+        <!-- Show "Publish your post" link for logged-in users -->
+        {% if user.is_authenticated %}
+        <div class="mb-3">
+            <a href="{% url 'post-create' %}" class="btn btn-success">Publish your post</a>
+        </div>
+        {% endif %}
+
+        {% if posts %}
+        <ul class="list-unstyled">
+            {% for post in posts %}
+            <li class="post-item mb-4">
+                <div class="image-container">
+                    {% if "placeholder" in post.featured_image.url %}
+                    <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
+                    {% else %}
+                    <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                    {% endif %}
+                </div>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                <p>{{ post.excerpt }}</p>
+                <small>Published on {{ post.created_on|date:"F j, Y" }}</small>
+                <p>
+                    <strong>Categories:</strong>
+                    {% for category in post.categories.all %}
+                    <a href="{% url 'category-posts' category.slug %}" class="badge bg-primary">{{ category.name }}</a>
+                    {% endfor %}
+                </p>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagination text-center">
+            {% if is_paginated %}
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-secondary">Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+            <a href="?page={{ num }}"
+                class="btn btn-light {% if num == page_obj.number %}active{% endif %}">{{ num }}</a>
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">Next</a>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        {% else %}
+        <p>No posts available.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
