@@ -18,7 +18,7 @@
     {% endfor %}
 {% endif %}
 
-<form method="POST" action="{% url 'collaboration' %}">
+<form method="POST" action="{% url 'collaboration_request' %}">
     {% csrf_token %}
     {{ collaboration_form.as_p }}
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -34,8 +34,8 @@
             <p><strong>Message:</strong> {{ request.message }}</p>
             <p><strong>Submitted on:</strong> {{ request.created_on|date:"F j, Y, g:i a" }}</p>
             <!-- Edit and Delete Links -->
-            <a href="{% url 'collaboration-edit' request.id %}" class="btn btn-secondary btn-sm">Edit</a>
-            <a href="{% url 'collaboration-delete' request.id %}" class="btn btn-danger btn-sm">Delete</a>
+            <a href="{% url 'collaboration_request_update' request.id %}" class="btn btn-secondary btn-sm">Edit</a>
+            <a href="{% url 'collaboration_request_delete' request.id %}" class="btn btn-danger btn-sm">Delete</a>
         </li>
     {% empty %}
         <p>No collaboration requests found.</p>

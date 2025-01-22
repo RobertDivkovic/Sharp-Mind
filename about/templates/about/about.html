@@ -15,7 +15,7 @@
         {% endif %}
     </div>
     <div class="col-12 col-md-8">
-        <p>{{ about.content }}</p>
+        <p>{{ about.content|default:"Content is not available at the moment." }}</p>
     </div>
 </div>
 
@@ -31,7 +31,20 @@
     {% endfor %}
 {% endif %}
 
-<form method="POST" action="{% url 'collaboration' %}">
+<!-- Display form errors -->
+{% if collaboration_form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, errors in collaboration_form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ field|capfirst }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="POST" action="{% url 'collaboration_request' %}">
     {% csrf_token %}
     {{ collaboration_form.as_p }}
     <button type="submit" class="btn btn-primary">Submit</button>

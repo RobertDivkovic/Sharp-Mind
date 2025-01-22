@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 from django.contrib import messages
 from .models import About, CollaborationRequest
 from .forms import CollaborationRequestForm
@@ -31,10 +31,11 @@ class AboutPageView(TemplateView):
         
         return context
 
-class CollaborationRequestView(FormView):
-    template_name = "about/collaboration_request.html"
+class CollaborationRequestView(CreateView):
+    model = CollaborationRequest
     form_class = CollaborationRequestForm
-    success_url = '/about/'  # Redirect after successful submission
+    template_name = 'about/collaboration_request.html'
+    success_url = reverse_lazy('about')
 
     def form_valid(self, form):
         """
