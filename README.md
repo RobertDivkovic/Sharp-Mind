@@ -348,6 +348,17 @@ The surface plane is the visual design of Sharp-Mind, including its color scheme
 - Mobile-first design with collapsible navigation menus.
 - Dynamic resizing of elements to fit screens below 768px width.
 
+![alt text](static/images/homepage.png)
+![alt text](static/images/signin1.png)
+![alt text](static/images/signup.png)
+![alt text](static/images/profilepage.png)
+![alt text](static/images/publishpost.png)
+![alt text](static/images/contact1.png)
+![alt text](static/images/categoriestrendin.png)
+![alt text](static/images/editleaveupvote.png)
+![alt text](static/images/postedit.png)
+![alt text](static/images/commentedit.png)
+
 ## How It Works
 
 - User Authentication: Users can register and log in to the platform. Once logged in, they gain access to features like viewing detailed content of other users, creating posts, commenting, and viewing their profiles.
