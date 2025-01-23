@@ -14,7 +14,8 @@ class TestViews(TestCase):
         self.user = User.objects.create_user(
             username='testuser', password='testpassword'
         )
-        self.category = Category.objects.create(name="Test Category", slug="test-category")
+        self.category = Category.objects.create(name="Test Category",
+                                                slug="test-category")
         self.post = Post.objects.create(
             title="Test Post",
             slug="test-post",
@@ -22,7 +23,7 @@ class TestViews(TestCase):
             content="Test content",
             status=1
         )
-        self.post.categories.add(self.category)  # Associate the post with the category
+        self.post.categories.add(self.category)
         self.contact_url = reverse('contact')
         self.post_detail_url = reverse('post-detail', args=[self.post.slug])
 
@@ -58,7 +59,7 @@ class TestViews(TestCase):
 
     def test_post_detail_view_get(self):
         """Test GET request for a post detail page."""
-        self.client.login(username='testuser', password='testpassword')  # Log in
+        self.client.login(username='testuser', password='testpassword')
         response = self.client.get(self.post_detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'news/post_detail.html')
@@ -71,7 +72,7 @@ class TestViews(TestCase):
         response = self.client.post(self.post_detail_url, {
             'body': 'This is a test comment'
         })
-        self.assertEqual(response.status_code, 302)  # Redirect after comment submission
+        self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.post_detail_url)
         self.assertEqual(Comment.objects.count(), 1)
         comment = Comment.objects.first()
@@ -88,7 +89,8 @@ class TestViews(TestCase):
 
     def test_category_post_list_view_get(self):
         """Test GET request for the category post list view."""
-        response = self.client.get(reverse('category-posts', args=[self.category.slug]))
+        response = self.client.get(reverse('category-posts',
+                                           args=[self.category.slug]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'news/index.html')
         self.assertIn(self.post, response.context['posts'])

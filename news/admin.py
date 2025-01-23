@@ -6,9 +6,11 @@ from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
 
+
 class CommentInline(admin.TabularInline):
     model = Comment
     extra = 1  # Number of empty comment forms to display
+
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
@@ -17,13 +19,15 @@ class PostAdmin(SummernoteModelAdmin):
     search_fields = ["title", "content", "excerpt"]
     prepopulated_fields = {"slug": ("title",)}
     summernote_fields = ("content",)  # Apply Summernote to the 'content' field
-    ordering = ('-created_on',)  # This sets the default order in the admin panel
+    ordering = ('-created_on',)
     inlines = [CommentInline]
     list_editable = ("status",)  # Allow inline editing of the status field
 
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("get_user_or_author", "email", "body", "post", "created_on", "approved")
+    list_display = ("get_user_or_author", "email", "body", "post",
+                    "created_on", "approved")
     list_filter = ("approved", "created_on")
     search_fields = ("author", "user__username", "email", "body")
     actions = ["approve_comments"]
@@ -35,10 +39,12 @@ class CommentAdmin(admin.ModelAdmin):
 
     def get_user_or_author(self, obj):
         """
-        Display the associated user if available; otherwise, fall back to the author field.
+        Display the associated user if available;
+        otherwise, fall back to the author field.
         """
         return obj.user.username if obj.user else obj.author
     get_user_or_author.short_description = "User/Author"
+
 
 # Register Category
 @admin.register(Category)
@@ -46,18 +52,21 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "slug")
     prepopulated_fields = {"slug": ("name",)}
 
+
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject', 'created_on')
     search_fields = ('name', 'email', 'subject', 'message')
 
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'profile_picture')  # Show the user and profile picture in the list view
+    list_display = ('user', 'profile_picture')
     search_fields = ('user__username',)  # Allow searching by username
     list_filter = ('user__is_active',)  # Add filters based on user status
-    fields = ('user', 'profile_picture')  # Allow editing of user and profile picture
+    fields = ('user', 'profile_picture')
     ordering = ('user__username',)
+
 
 # Inline for Profile (to edit profile picture in user details)
 class ProfileInline(admin.StackedInline):
@@ -66,6 +75,7 @@ class ProfileInline(admin.StackedInline):
     verbose_name_plural = 'Profile'
     fields = ('profile_picture',)  # Allow editing the profile picture
 
+
 # Custom UserAdmin to include ProfileInline
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline,)  # Add the ProfileInline to UserAdmin
@@ -73,6 +83,7 @@ class CustomUserAdmin(UserAdmin):
     # Optional: Add additional display fields or filters
     list_display = ('username', 'email', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
+
 
 # Unregister the default UserAdmin and register the customized version
 admin.site.unregister(User)

@@ -1,10 +1,12 @@
 from django import forms
 from .models import Comment, ContactSubmission, Post, Profile
 
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('body',)
+
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -14,6 +16,7 @@ class ContactForm(forms.ModelForm):
             'message': forms.Textarea(attrs={'rows': 4}),
         }
 
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -22,6 +25,7 @@ class PostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 5}),
             'categories': forms.CheckboxSelectMultiple(),
         }
+
 
 class ProfileForm(forms.ModelForm):
     class Meta:

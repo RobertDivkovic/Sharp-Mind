@@ -4,16 +4,21 @@ from django.contrib.auth.models import User
 from about.models import About, CollaborationRequest
 from about.forms import CollaborationRequestForm
 
+
 class TestAboutViews(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="password")
+        self.user = User.objects.create_user(username="testuser",
+                                             password="password")
         self.client.login(username="testuser", password="password")
-        self.about = About.objects.create(title="About Us", content="Details about us.")
+        self.about = About.objects.create(title="About Us",
+                                          content="Details about us.")
         self.about_url = reverse('about')
         self.collaboration_request_url = reverse('collaboration_request')
-        self.collaboration_request_update_url = reverse('collaboration_request_update', args=[1])
-        self.collaboration_request_delete_url = reverse('collaboration_request_delete', args=[1])
+        self.collaboration_request_update_url = reverse(
+            'collaboration_request_update', args=[1])
+        self.collaboration_request_delete_url = reverse(
+            'collaboration_request_delete', args=[1])
 
     def test_about_page_view_get(self):
         """Test GET request for the About page."""
@@ -25,20 +30,21 @@ class TestAboutViews(TestCase):
     def test_about_page_view_authenticated_user(self):
         """Test About page for authenticated users with collaboration form."""
         response = self.client.get(self.about_url)
-    
+
         # Ensure the request is successful
         self.assertEqual(response.status_code, 200)
-    
+
         # Check that the correct template is used
         self.assertTemplateUsed(response, 'about/about.html')
-    
+
         # Verify the About content
         self.assertContains(response, "About Us")
         self.assertContains(response, "Details about us.")
-    
+
         # Verify the CollaborationRequestForm is in the context
         self.assertIn('collaboration_form', response.context)
-        self.assertIsInstance(response.context['collaboration_form'], CollaborationRequestForm)
+        self.assertIsInstance(response.context['collaboration_form'],
+                              CollaborationRequestForm)
 
     def test_collaboration_request_view_get(self):
         """Test GET request for the Collaboration Request page."""
@@ -79,7 +85,8 @@ class TestAboutViews(TestCase):
             email="oldemail@example.com",
             message="Old message"
         )
-        response = self.client.post(reverse('collaboration_request_update', args=[collaboration_request.id]), {
+        response = self.client.post(reverse('collaboration_request_update',
+                                    args=[collaboration_request.id]), {
             'name': 'Updated Name',
             'email': 'updatedemail@example.com',
             'message': 'Updated message'
@@ -87,7 +94,8 @@ class TestAboutViews(TestCase):
         self.assertEqual(response.status_code, 302)
         collaboration_request.refresh_from_db()
         self.assertEqual(collaboration_request.name, 'Updated Name')
-        self.assertEqual(collaboration_request.email, 'updatedemail@example.com')
+        self.assertEqual(collaboration_request.email,
+                         'updatedemail@example.com')
 
     def test_collaboration_request_delete_view(self):
         """Test CollaborationRequestDeleteView."""
@@ -97,6 +105,8 @@ class TestAboutViews(TestCase):
             email="testemail@example.com",
             message="Test message"
         )
-        response = self.client.post(reverse('collaboration_request_delete', args=[collaboration_request.id]))
+        response = self.client.post(reverse('collaboration_request_delete',
+                                    args=[collaboration_request.id]))
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(CollaborationRequest.objects.filter(id=collaboration_request.id).exists())
+        self.assertFalse(CollaborationRequest.objects.filter
+                         (id=collaboration_request.id).exists())
