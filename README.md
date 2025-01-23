@@ -3,7 +3,7 @@
 [Link to live page](https://newssharpmind-7fe060023557.herokuapp.com/)
 
 
-![alt text]()
+![alt text](static/images/responsive.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -551,9 +551,37 @@ Unit tests were written to validate critical functionalities:
 
 - Results:
 
-- Performance: Scored 85/100 after optimizing images and reducing render-blocking scripts.
-- Accessibility: Achieved 100/100 by ensuring proper semantic HTML and ARIA labels.
-- Best Practices: Improved to 95/100 by addressing HTTPS warnings and mixed content issues.
+- Performance: Scored 89/100 after optimizing images and reducing render-blocking scripts.
+- Accessibility: Achieved 93/100 by ensuring proper semantic HTML and ARIA labels.
+- Best Practices: Improved to 100/100 by addressing HTTPS warnings and mixed content issues.
+
+![alt text](static/images/lighthouse.png)
+
+### Validator Testing
+
+- No errors were returned from (https://pep8ci.herokuapp.com/#)
+
+![alt text](static/images/CIPythonLinter1.png)
+![alt text](static/images/CIPythonLinter2.png)
+![alt text](static/images/CIPythonLinter3.png)
+![alt text](static/images/CIPythonLinter4.png)
+
+### HTML Validator
+
+- 0 Errors
+
+- 0 Warnings
+
+![alt text](static/images/HTML.png)
+![alt text](static/images/HTML1.png)
+
+### CSS Validator
+
+0 Errors
+
+0 warnings
+
+![alt text](static/images/CSS.png)
 
 ### User Feedback and Testing
 

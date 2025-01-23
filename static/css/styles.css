@@ -150,12 +150,12 @@ a:hover {
 
 .pagination a:hover {
     background-color: olive; /* Olive green hover */
-    border-color: olive;
+    border-color: rgb(26, 26, 5);
     color: white;
 }
 
 .pagination a.active {
-    background-color: #0077cc;
+    background-color: #1798f5;
     color: white;
     border-color: #0077cc;
 }
