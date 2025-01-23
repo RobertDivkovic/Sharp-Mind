@@ -195,6 +195,7 @@ Detailed pathways outlining how users interact with the platform to accomplish t
 ## Skeleton Plane
 
 ### Wireframes and Layout
+
 The wireframes for Sharp-Mind define the spatial arrangement and hierarchy of elements on key pages. Below are the detailed descriptions of each page's layout:
 
 ### Homepage
@@ -206,7 +207,7 @@ The wireframes for Sharp-Mind define the spatial arrangement and hierarchy of el
 
 ### Main Content Area:
 
-- Welcome Heading: A large, centered <h1> element with a short welcome message.
+- Welcome Heading: A large, centered h1 element with a short welcome message.
 - Categories Section: Collapsible sidebar or dropdown menu for category navigation on the left-hand side.
 - Trending Posts Section: Another collapsible sidebar or dropdown menu showcasing top posts based on voting activity.
 
@@ -315,11 +316,13 @@ The wireframes for Sharp-Mind define the spatial arrangement and hierarchy of el
 
 
 ## Surface Plane
+
 The surface plane is the visual design of Sharp-Mind, including its color scheme, typography, and imagery.
 
 ### Color Scheme:
 
 ### Primary Colors:
+
 - Dark Blue (#34495e) for the header and footer, symbolizing reliability and professionalism.
 - Light Grey (#f2f5f7) for the background to ensure readability and reduce visual strain.
 
@@ -360,6 +363,7 @@ The surface plane is the visual design of Sharp-Mind, including its color scheme
 - Get in Touch: Sharp-Mind provides a Contact Us form where users can reach out to staff for support, suggestions, or inquiries. This ensures a direct communication channel between users and the administrative team.
 
 ## Existing Features
+
 Sharp-Mind incorporates a wide range of features that enhance user interaction and streamline the blogging experience:
 -	User Registration and Authentication: Users can securely sign up, log in, and log out of the platform. Once logged in, they gain access to all platform functionalities.
 -	Create, View, Edit, and Delete Posts: Registered users can create posts, add images, and provide detailed content. They can also edit or delete their posts at any time.
@@ -582,3 +586,199 @@ Unit tests were written to validate critical functionalities:
 
 ### Conclusion
 Through rigorous testing, the Sharp-Mind project has achieved a high standard of functionality, usability, and responsiveness. Continuous feedback and iterative improvements have ensured the application provides an excellent user experience across devices and browsers.
+
+## Deployment
+The Sharp-Mind project has been deployed using Heroku, which ensures seamless access for users while maintaining a reliable backend infrastructure. The deployment process involved using Heroku Dynos for server hosting and configuring the required environment variables. Below are the detailed steps for deploying the project and instructions for forking the repository.
+
+- Steps for Deployment
+
+### Preparing for Deployment
+
+- Set Up a Heroku Account:
+
+- Visit Heroku and create a free account if you don't already have one.
+- Log in to your Heroku dashboard.
+
+- Install Heroku CLI (Optional):
+
+- For advanced deployment and app management, install the Heroku CLI.
+
+- Project Repository:
+
+- Ensure your project repository is up-to-date and hosted on GitHub.
+
+### Deployment on Heroku
+
+1) Create a New Heroku App:
+
+Log in to Heroku and navigate to the "New" button in the dashboard.
+Select "Create New App" and provide a unique name for your app (e.g., sharp-mind-blog).
+Choose a region closest to your target audience (e.g., United States or Europe).
+
+2) Connect Heroku to GitHub Repository:
+
+In your app's dashboard, go to the "Deploy" tab.
+Under "Deployment method", select GitHub.
+Click "Connect to GitHub" and authorize Heroku to access your GitHub account if needed.
+Search for your repository by name and click "Connect".
+
+3) Set Environment Variables:
+
+Navigate to the "Settings" tab.
+Under "Config Vars", click "Reveal Config Vars" and add the following:
+DATABASE_URL: Your PostgreSQL database URL.
+SECRET_KEY: Your Django project secret key.
+CLOUDINARY_URL: The URL for your Cloudinary account for image hosting.
+Add any additional variables required for the project.
+
+4) Install PostgreSQL Add-On:
+
+In the "Resources" tab, search for the Heroku Postgres add-on and attach it to your app.
+
+5) Build the App:
+
+In the "Deploy" tab, scroll down to "Manual Deploy".
+Select the branch you want to deploy (e.g., main) and click "Deploy Branch".
+
+6) Collect Static Files:
+
+After deployment, ensure you run python manage.py collectstatic to collect static files for Heroku.
+
+7) Monitor Build Logs:
+
+Heroku will display the build process logs. Ensure there are no errors during deployment.
+
+8) Launch the App:
+
+Once the build is complete, click "Open App" to view your deployed application.
+
+### Debugging Deployment Issues
+
+- Enable Debugging (Temporarily):
+
+- If the app does not load properly, temporarily set DEBUG = True in settings.py to identify errors.
+
+- Check Logs:
+
+- Go to the "More" dropdown in your Heroku app dashboard and select "View Logs" to troubleshoot errors.
+
+- Update Dependencies:
+
+- Ensure all Python dependencies are listed in requirements.txt.
+- Run pip freeze > requirements.txt to update the file.
+
+- Run Migrations:
+
+- Use the Heroku CLI to run database migrations:
+heroku run python manage.py migrate
+
+### Forking the Repository
+
+1) Steps to Fork the Repository
+
+- Navigate to the Sharp-Mind GitHub Repository.
+- Click the "Fork" button in the upper right corner of the repository page.
+- Provide a name and description for your forked repository.
+- Click "Create fork".
+
+2) Cloning the Forked Repository
+
+- Open your terminal or preferred IDE.
+- Clone the forked repository:
+
+git clone https://github.com/<your-username>/<forked-repository>.git
+
+- Navigate to the project directory:
+
+cd <forked-repository>
+
+3) Make and Push Changes
+
+- Make changes to the project in your local environment.
+- Stage and commit your changes:
+
+git add .
+git commit -m "Your changes"
+
+- Push changes to your forked repository:
+
+git push origin main
+
+4) Pull Requests
+
+- If you want to contribute back to the original repository:
+
+- Navigate to the original repository and click "Pull Requests".
+- Click "New Pull Request" and provide details about the changes you made.
+- Submit the pull request for review.
+
+
+## Credits
+
+- **Content:** All website content and logic were developed by Robert Divkovic.
+
+
+### Media
+
+- Cloudinary:
+
+- Image hosting and delivery were powered by Cloudinary.
+
+### Frameworks and Libraries
+
+- Django:
+- Used as the backend framework for building the application, managing database models, and serving dynamic content.
+
+- Bootstrap:
+
+- Provided a responsive and visually appealing frontend design.
+
+- Crispy Forms and Crispy Bootstrap5:
+
+- Improved the styling and usability of Django forms.
+
+- Font Awesome:
+
+- Icons used in the navigation bar and footer were sourced from Font Awesome.
+
+### Tools
+
+- Heroku:
+
+- The project was deployed using Heroku, which offered a reliable hosting solution.
+
+- Git and GitHub:
+
+- Version control was managed using Git, with the project hosted on GitHub.
+
+- Code Institute Full Stack Template:
+
+- The workspace environment was initialized using the Code Institute template.
+
+- Am I Responsive:
+
+- Used to test and showcase the responsiveness of the website across various devices.
+
+- Lighthouse:
+
+- Google Lighthouse was used for performance, accessibility, and SEO testing.
+
+- Cloudinary API:
+
+- Allowed for seamless media management and secure delivery.
+
+- Inspiration
+
+### The Sharp-Mind project draws inspiration from Code Institute preparation full stack project: 
+
+- [Code Institute, I Think Therefore I Blog](https://github.com/RobertDivkovic/I-Think-Therefore-I-Blog)
+
+
+### Acknowledgments and Special Thanks to :
+
+### Code Institute
+
+#### This project was developed as part of the Code Institute's Full Stack Software Development program.
+
+
+- A special thanks to all the online resources, such as Stack Overflow, Django Documentation, and Bootstrap Documentation, which provided support and solutions to challenges faced during the project.
