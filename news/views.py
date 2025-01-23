@@ -18,6 +18,7 @@ from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 import json
 
+
 # Contact View
 class ContactView(View):
     template_name = "news/contact.html"
@@ -30,9 +31,10 @@ class ContactView(View):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Message has been sent successfully! We will respond within 1 hour.")
+            messages.success(request, "Message has been sent successfully!")
             return redirect("contact")
         return render(request, self.template_name, {'form': form})
+
 
 # Post List View
 class PostList(generic.ListView):
@@ -79,6 +81,7 @@ class PostList(generic.ListView):
 
         return context
 
+
 # Category Post List View
 class CategoryPostList(generic.ListView):
     model = Post
@@ -95,6 +98,7 @@ class CategoryPostList(generic.ListView):
         context['categories'] = Category.objects.all()
         context['selected_category'] = get_object_or_404(Category, slug=self.kwargs['slug'])
         return context
+
 
 # Post Detail View with Comment Form
 class PostDetail(FormMixin, generic.DetailView):
@@ -127,6 +131,7 @@ class PostDetail(FormMixin, generic.DetailView):
         return redirect('post-detail', slug=self.object.slug)  # Redirect to the same post
         return self.form_invalid(form)
 
+
 # Profile View
 class ProfileView(generic.TemplateView):
     template_name = "news/profile.html"
@@ -142,6 +147,7 @@ class ProfileView(generic.TemplateView):
         context['upvoted_posts'] = Post.objects.filter(upvotes=user)
         context['downvoted_posts'] = Post.objects.filter(downvotes=user)
         return context
+
 
 # Posts By Author View
 class PostsByAuthor(generic.ListView):
@@ -159,12 +165,13 @@ class PostsByAuthor(generic.ListView):
         context['author'] = User.objects.get(username=self.kwargs['username'])
         return context
 
+
 # Post Create View
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = "news/post_create.html"
     fields = ['title', 'featured_image', 'content', 'categories', 'status']
-    
+
     def form_valid(self, form):
         form.instance.author = self.request.user  # Associate the logged-in user as the author
         form.instance.slug = form.cleaned_data['title'].lower().replace(' ', '-')  # Auto-generate slug
@@ -175,6 +182,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()  # Provide categories for selection
         return context
+
 
 # Post Update View
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -191,6 +199,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         post = self.get_object()
         return self.request.user == post.author
 
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'news/post_confirm_delete.html'
@@ -203,7 +212,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "The post has been deleted successfully!")
         return super().delete(request, *args, **kwargs)
-    
+
     def get_success_url(self):
         # Redirect to the user's profile page after deletion
         return reverse_lazy('profile', kwargs={'username': self.request.user.username})
@@ -211,6 +220,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
 
 # Post Edit View
 class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -226,6 +236,7 @@ class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
 
 # Comment Update View
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -243,6 +254,7 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         comment = self.get_object()
         return self.request.user == comment.user
 
+
 # Comment Delete View
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
@@ -253,10 +265,6 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         comment = self.get_object()
         return self.request.user == comment.user
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-import json
 
 class PostVoteView(LoginRequiredMixin, View):
     @method_decorator(csrf_exempt)  # Exempt CSRF for now if necessary
@@ -286,6 +294,7 @@ class PostVoteView(LoginRequiredMixin, View):
             })
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
 
 @login_required
 def profile_view(request, username):

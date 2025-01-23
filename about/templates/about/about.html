@@ -8,8 +8,8 @@
 
 <div class="row">
     <div class="col-12 col-md-4 text-center">
-        {% if "placeholder" in about.profile_image.url %}
-            <img src="{% static 'images/library.png' %}" width="100%" alt="placeholder image">
+        {% if about.profile_image and "placeholder" in about.profile_image.url %}
+            <img src="{% static 'images/library.png' %}" width="400" alt="Placeholder image">
         {% else %}
             <img src="{{ about.profile_image.url }}" width="100%" alt="{{ about.title }}">
         {% endif %}
@@ -22,7 +22,7 @@
 <hr>
 
 {% if user.is_authenticated %}
-<h3>Submit a Collaboration Request</h3>
+<h2>Submit a Collaboration Request</h2>
 
 <!-- Display messages -->
 {% if messages %}
@@ -46,7 +46,18 @@
 
 <form method="POST" action="{% url 'collaboration_request' %}">
     {% csrf_token %}
-    {{ collaboration_form.as_p }}
+    <p>
+        <label for="id_name">Full Name:</label>
+        <input id="id_name" name="name" type="text" class="form-control" required>
+    </p>
+    <p>
+        <label for="id_email">Email Address:</label>
+        <input id="id_email" name="email" type="email" class="form-control" required>
+    </p>
+    <p>
+        <label for="id_message">Collaboration Message:</label>
+        <textarea id="id_message" name="message" class="form-control" required></textarea>
+    </p>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% else %}

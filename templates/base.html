@@ -1,18 +1,19 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="en" dir="ltr" class="h-100">
 
 <head>
     <title>{% block title %}Sharp-Mind Blog{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Sharp-Mind Blog: Your source for reliable and engaging news.">
+    <meta name="description" content="Sharp-Mind Blog, Your source for reliable and engaging news.">
     <meta name="author" content="Robert Divkovic">
     <meta property="og:title" content="Sharp-Mind Blog">
-    <meta property="og:description" content="Stay informed with Sharp-Mind Blog, your source for reliable and engaging news.">
+    <meta property="og:description"
+        content="Stay informed with Sharp-Mind Blog, your source for reliable and engaging news.">
     <meta property="og:type" content="website">
     <meta name="referrer" content="no-referrer-when-downgrade">
 
@@ -26,19 +27,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="/static/css/styles.css">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token }}">
-    
+
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 </head>
 
-<body class="d-flex flex-column h-100" style="background-color: #b8bfc4; color: #34495e;">
+<body class="d-flex flex-column h-100">
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #34495e;">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}" style="font-size: 1.5rem;">
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
                 Sharp-Mind
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -101,12 +102,12 @@
     </div>
 
     <!-- Main Content -->
-    <main class="container my-5 flex-grow-1 bg-white p-4 shadow rounded">
+    <main class="container my-5 flex-grow-1 bg-white p-4 shadow rounded" aria-label="Main Content">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="footer py-4 mt-auto" style="background-color: #34495e; color: #ecf0f1;">
+    <footer class="footer py-4 mt-auto">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
@@ -114,13 +115,13 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <a href="https://facebook.com" target="_blank" class="text-light mx-2" aria-label="Facebook">
-                        <i class="fab fa-facebook"></i></a>
+                        <i class="fab fa-facebook" aria-hidden="true"></i></a>
                     <a href="https://twitter.com" target="_blank" class="text-light mx-2" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i></a>
+                        <i class="fab fa-twitter" aria-hidden="true"></i></a>
                     <a href="https://instagram.com" target="_blank" class="text-light mx-2" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i></a>
+                        <i class="fab fa-instagram" aria-hidden="true"></i></a>
                     <a href="https://youtube.com" target="_blank" class="text-light mx-2" aria-label="YouTube">
-                        <i class="fab fa-youtube"></i></a>
+                        <i class="fab fa-youtube" aria-hidden="true"></i></a>
                 </div>
             </div>
             <div class="row mt-2">
