@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["8000-robertdivkovi-sharpmind-q90e0ei4yyh.ws.codeinstitute-ide.net", ".herokuapp.com"]
+ALLOWED_HOSTS = ["8000-robertdivkovi-sharpmind-u82lx8u3zj5.ws.codeinstitute-ide.net", ".herokuapp.com"]
 
 # Application definition
 
@@ -112,7 +112,8 @@ if 'test' in sys.argv:
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeinstitute-ide.net/",
-    "https://*.herokuapp.com"
+    "https://*.herokuapp.com",
+    "https://newssharpmind-7fe060023557.herokuapp.com"
 ]
 
 # Password validation
